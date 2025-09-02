@@ -1,0 +1,39 @@
+services:
+  - type: web
+    name: ai-survey-backend
+    env: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: ai-survey-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: false
+      - key: ENVIRONMENT
+        value: production
+      - key: CORS_ORIGINS
+        value: ["https://ai-survey-platform.netlify.app", "http://localhost:3000"]
+      - key: ALLOWED_HOSTS
+        value: ["ai-survey-backend.onrender.com", "localhost", "127.0.0.1"]
+      - key: GOOGLE_AI_API_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: TWILIO_ACCOUNT_SID
+        sync: false
+      - key: TWILIO_AUTH_TOKEN
+        sync: false
+      - key: TWILIO_PHONE_NUMBER
+        sync: false
+      - key: REDIS_URL
+        value: redis://localhost:6379
+
+databases:
+  - name: ai-survey-db
+    plan: free

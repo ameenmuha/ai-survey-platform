@@ -17,8 +17,9 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     REFRESH_TOKEN_EXPIRE_DAYS: int = 7
     
-    # CORS
+    # CORS / Hosts
     CORS_ORIGINS: List[str] = ["http://localhost:3000", "http://127.0.0.1:3000"]
+    ALLOWED_HOSTS: List[str] = ["*"]
     
     # AI Services
     GOOGLE_AI_API_KEY: Optional[str] = None
@@ -64,6 +65,18 @@ class Settings(BaseSettings):
         case_sensitive = True
 
 settings = Settings()
+
+# Normalize CORS_ORIGINS when provided as a comma-separated string or JSON string
+if isinstance(settings.CORS_ORIGINS, str):
+    import json
+    try:
+        parsed = json.loads(settings.CORS_ORIGINS)
+        if isinstance(parsed, list):
+            settings.CORS_ORIGINS = parsed
+        else:
+            settings.CORS_ORIGINS = [settings.CORS_ORIGINS]
+    except Exception:
+        settings.CORS_ORIGINS = [origin.strip() for origin in settings.CORS_ORIGINS.split(",") if origin.strip()]
 
 # Create upload directory if it doesn't exist
 os.makedirs(settings.UPLOAD_DIR, exist_ok=True)

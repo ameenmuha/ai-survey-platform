@@ -97,9 +97,9 @@ async def get_current_active_user(
         )
     return current_user
 
-def authenticate_user(email: str, password: str, db: AsyncSession) -> Optional[User]:
+async def authenticate_user(email: str, password: str, db: AsyncSession) -> Optional[User]:
     """Authenticate user with email and password"""
-    user = User.get_by_email(db, email)
+    user = await User.get_by_email(db, email)
     if not user:
         return None
     if not verify_password(password, user.hashed_password):
