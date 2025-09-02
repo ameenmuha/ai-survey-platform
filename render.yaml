@@ -18,9 +18,9 @@ services:
       - key: ENVIRONMENT
         value: production
       - key: CORS_ORIGINS
-        value: ["https://ai-survey-platform.netlify.app", "http://localhost:3000"]
+        value: https://ai-survey-platform.netlify.app", "http://localhost:3000
       - key: ALLOWED_HOSTS
-        value: ["ai-survey-backend.onrender.com", "localhost", "127.0.0.1"]
+        value: ai-survey-backend.onrender.com, localhost, 127.0.0.1
       - key: GOOGLE_AI_API_KEY
         sync: false
       - key: OPENAI_API_KEY
