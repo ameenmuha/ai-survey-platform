@@ -19,7 +19,7 @@ class Settings(BaseSettings):
     
     # CORS / Hosts
     CORS_ORIGINS: List[str] = ["http://localhost:3000", "http://127.0.0.1:3000"]
-    ALLOWED_HOSTS: List[str] = ["*"]
+    ALLOWED_HOSTS: List[str] = ["localhost", "127.0.0.1"]
     
     # AI Services
     GOOGLE_AI_API_KEY: Optional[str] = None
